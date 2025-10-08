@@ -4,6 +4,9 @@
     <title>Form Input Pegawai</title> 
 </head>
 <body>
+@extends('employees.master')
+@section('title', 'Tambah Pegawai')
+@section('content')
     <h1 class="mb-4">Form Pegawai</h1>
     <form action="{{ route('employees.store') }}" method="POST"> 
         @csrf

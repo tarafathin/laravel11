@@ -4,8 +4,12 @@
 
 </head>
 <body>
+@extends('employees.master')
+@section('title', 'Data Pegawai')
+@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Daftar Pegawai</h1>
+    <a href="{{ route('employees.create') }}" style="display:inline-block; margin-bottom:10px;">Tambah Data</a>
 
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
@@ -44,5 +48,6 @@
         @endforelse
     </table>
     </div>
+@endsection
 </body>
 </html>
