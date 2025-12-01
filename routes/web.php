@@ -6,7 +6,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SalaryController;
-
+use App\http\Controllers\LeaveController;
 // Halaman Beranda
 Route::get('/', function () {
     return view('home');
@@ -26,3 +26,6 @@ Route::resource('attendance', AttendanceController::class);
 
 // Resource route untuk Gaji
 Route::resource('salaries', SalaryController::class);
+
+Route::resource('leave', LeaveController::class);
+

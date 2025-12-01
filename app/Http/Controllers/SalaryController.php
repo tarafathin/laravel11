@@ -21,25 +21,36 @@ class SalaryController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'karyawan_id'        => 'required|exists:employees,id',
-            'periodic'           => 'required|string|max:255',
-            'total_gaji'         => 'required|numeric|min:0',
-            'status_pembayaran'  => 'required|string|max:50',
-            'keterangan'         => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'karyawan_id'        => 'required|exists:employees,id',
+        'bulan'              => 'required|date_format:Y-m', // contoh: 2025-01
+        'gaji_pokok'         => 'required|numeric|min:0',
+        'tunjangan'          => 'nullable|numeric|min:0',
+        'potongan'           => 'nullable|numeric|min:0',
+        'status_pembayaran'  => 'required|string|max:50',
+        'keterangan'         => 'nullable|string',
+    ]);
 
-        Salary::create([
-            'karyawan_id'        => $request->karyawan_id,
-            'periodic'           => $request->periodic,
-            'total_gaji'         => $request->total_gaji,
-            'status_pembayaran'  => $request->status_pembayaran,
-            'keterangan'         => $request->keterangan,
-        ]);
+    $total_gaji = 
+          ($request->gaji_pokok ?? 0)
+        + ($request->tunjangan ?? 0)
+        - ($request->potongan ?? 0);
 
-        return redirect()->route('salaries.index')->with('success', 'Data gaji berhasil ditambahkan.');
-    }
+    Salary::create([
+        'karyawan_id'        => $request->karyawan_id,
+        'bulan'              => $request->bulan,
+        'gaji_pokok'         => $request->gaji_pokok,
+        'tunjangan'          => $request->tunjangan ?? 0,
+        'potongan'           => $request->potongan ?? 0,
+        'total_gaji'         => $total_gaji,
+        'status_pembayaran'  => $request->status_pembayaran,
+        'keterangan'         => $request->keterangan,
+    ]);
+
+    return redirect()->route('salaries.index')
+                     ->with('success', 'Data gaji berhasil ditambahkan.');
+}
 
     public function show(Salary $salary)
     {
@@ -57,16 +68,26 @@ class SalaryController extends Controller
     {
         $request->validate([
             'karyawan_id'        => 'required|exists:employees,id',
-            'periodic'           => 'required|string|max:255',
-            'total_gaji'         => 'required|numeric|min:0',
+            'bulan'              => 'nullable|string|max:10',
+            'gaji_pokok'         => 'required|numeric|min:0',
+            'tunjangan'          => 'nullable|numeric|min:0',
+            'potongan'           => 'nullable|numeric|min:0',
             'status_pembayaran'  => 'required|string|max:50',
             'keterangan'         => 'nullable|string',
         ]);
 
+        $total_gaji = 
+            ($request->gaji_pokok ?? 0) +
+            ($request->tunjangan ?? 0) -
+            ($request->potongan ?? 0);
+
         $salary->update([
             'karyawan_id'        => $request->karyawan_id,
-            'periodic'           => $request->periodic,
-            'total_gaji'         => $request->total_gaji,
+            'bulan'              => $request->bulan ?? now()->format('Y-m'),
+            'gaji_pokok'         => $request->gaji_pokok,
+            'tunjangan'          => $request->tunjangan ?? 0,
+            'potongan'           => $request->potongan ?? 0,
+            'total_gaji'         => $total_gaji,
             'status_pembayaran'  => $request->status_pembayaran,
             'keterangan'         => $request->keterangan,
         ]);

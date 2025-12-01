@@ -7,23 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up(): void
-    {
-        Schema::table('employees', function (Blueprint $table) {
+{
+    Schema::table('employees', function (Blueprint $table) {
+
+        if (!Schema::hasColumn('employees', 'departemen_id')) {
             $table->unsignedBigInteger('departemen_id')->nullable()->after('status');
-            $table->unsignedBigInteger('jabatan_id')->nullable()->after('departemen_id');
-
-            // Tambahkan foreign key
             $table->foreign('departemen_id')->references('id')->on('departments')->onDelete('set null');
-            $table->foreign('jabatan_id')->references('id')->on('positions')->onDelete('set null');
-        });
-    }
+        }
 
-    public function down(): void
-    {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->dropForeign(['departemen_id']);
-            $table->dropForeign(['jabatan_id']);
-            $table->dropColumn(['departemen_id', 'jabatan_id']);
-        });
-    }
+        if (!Schema::hasColumn('employees', 'jabatan_id')) {
+            $table->unsignedBigInteger('jabatan_id')->nullable()->after('departemen_id');
+            $table->foreign('jabatan_id')->references('id')->on('positions')->onDelete('set null');
+        }
+    });
+}
+
 };

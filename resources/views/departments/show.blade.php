@@ -2,26 +2,64 @@
 @section('title', 'Detail Departemen')
 
 @section('content')
-<div class="card card-custom p-4">
-  <h3 class="fw-bold text-primary mb-3">Detail Departemen</h3>
+<div class="container py-4">
 
-  <table class="table table-bordered">
-    <tr>
-      <th style="width: 30%">Nama Departemen</th>
-      <td>{{ $department->nama_departemen }}</td>
-    </tr>
-    <tr>
-      <th>Dibuat Pada</th>
-      <td>{{ $department->created_at->format('d M Y H:i') }}</td>
-    </tr>
-    <tr>
-      <th>Diperbarui Terakhir</th>
-      <td>{{ $department->updated_at->format('d M Y H:i') }}</td>
-    </tr>
-  </table>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-white text-shadow">Detail Departemen</h2>
+    </div>
 
-  <div class="text-end mt-3">
-    <a href="{{ route('departments.index') }}" class="btn btn-secondary">Kembali</a>
-  </div>
+    <div class="glass-box p-4 rounded-4 shadow-lg">
+
+        <table class="table table-hover align-middle bg-white bg-opacity-75 rounded-4 overflow-hidden">
+            <tbody>
+
+                <tr>
+                    <th class="bg-light fw-semibold" style="width: 30%;">Nama Departemen</th>
+                    <td>{{ $department->nama_departemen }}</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light fw-semibold">Dibuat Pada</th>
+                    <td>{{ $department->created_at->format('d M Y H:i') }}</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light fw-semibold">Diperbarui Terakhir</th>
+                    <td>{{ $department->updated_at->format('d M Y H:i') }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="text-end mt-3">
+            <a href="{{ route('departments.index') }}" class="btn btn-secondary px-4">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
+
+    </div>
 </div>
+
+{{-- ===========================
+     GLASS UI (SAMA SEPERTI LAINNYA)
+=========================== --}}
+<style>
+.text-shadow {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Table smoothing */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+</style>
+
 @endsection
