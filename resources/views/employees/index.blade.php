@@ -1,53 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+@extends('layouts.master')
+@section('title', 'Daftar Pegawai | App Pegawai')
 
-</head>
-<body>
-@extends('employees.master')
-@section('title', 'Data Pegawai')
 @section('content')
-    <div class="container mt-5">
-        <h1 class="mb-4">Daftar Pegawai</h1>
-    <a href="{{ route('employees.create') }}" style="display:inline-block; margin-bottom:10px;">Tambah Data</a>
-
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nama Lengkap</th>
-                <th>Email</th>
-                <th>Nomor Telepon</th>
-                <th>Tanggal Lahir</th>
-                <th>Alamat</th>
-                <th>Tanggal Masuk</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($employees as $employee)
-            <tr>
-                <td>{{ $employee->nama_lengkap }}</td>
-                <td>{{ $employee->email }}</td>
-                <td>{{ $employee->nomor_telepon }}</td>
-                <td>{{ $employee->tanggal_lahir }}</td>
-                <td>{{ $employee->alamat }}</td>
-                <td>{{ $employee->tanggal_masuk }}</td>
-                <td>{{ $employee->status }}</td>
-                <td>
-                    <a href="{{ route('employees.show', $employee->id) }}">Detail</a> |
-                    <a href="{{ route('employees.edit', $employee->id) }}">Edit</a> |
-                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
+<div class="container py-4">
+  <h2>Daftar Pegawai</h2>
+  <a href="{{ route('employees.create') }}" class="btn btn-primary mb-3">Tambah Pegawai</a>
+  @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+  @endif
+  <div class="table-responsive">
+    <table class="table table-custom table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nama Lengkap</th>
+          <th>Email</th>
+          <th>Jabatan</th>
+          <th>Departemen</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        @forelse($employees as $emp)
+        <tr>
+          <td>{{ $emp->id }}</td>
+          <td>{{ $emp->nama_lengkap }}</td>
+          <td>{{ $emp->email }}</td>
+          <td>{{ $emp->position?->nama_jabatan ?? '-' }}</td>
+          <td>{{ $emp->department?->nama_departemen ?? '-' }}</td>
+          <td>
+            <span class="badge bg-{{ $emp->status == 'aktif' ? 'success' : 'secondary' }}">
+              {{ $emp->status }}
+            </span>
+          </td>
+          <td>
+            <a href="{{ route('employees.show', $emp->id) }}" class="btn btn-sm btn-info">Lihat</a>
+            <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-sm btn-warning">Edit</a>
+            <form action="{{ route('employees.destroy', $emp->id) }}" method="POST" style="display:inline;">
+              @csrf @method('DELETE')
+              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus pegawai ini?')">Hapus</button>
+            </form>
+          </td>
+        </tr>
         @empty
+        <tr>
+          <td colspan="7" class="text-center">Belum ada data pegawai.</td>
+        </tr>
         @endforelse
+      </tbody>
     </table>
-    </div>
+    {{ $employees->links() }}
+  </div>
+</div>
 @endsection
-</body>
-</html>

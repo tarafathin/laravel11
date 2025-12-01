@@ -1,0 +1,247 @@
+/* 🌈 ====== STYLE.CSS ====== */
+
+/* Reset & Global */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff; /* ✅ Semua teks default putih */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Global Background Video */
+.global-bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.global-bg-video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 30, 48, 0.6); /* ✅ Overlay gelap agar teks terbaca */
+  z-index: 1;
+}
+
+/* Navbar */
+.navbar-custom {
+  background: linear-gradient(90deg, #243b55, #141e30);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-custom .navbar-brand {
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar-custom .nav-link {
+  color: #cfd9df !important;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Main Content */
+main {
+  position: relative;
+  z-index: 5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Card Custom */
+.card-custom {
+  background: #fff;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Tombol */
+.btn {
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #243b55;
+  border: none;
+  color: #fff; /* ✅ Teks tombol putih */
+}
+
+.btn-primary:hover {
+  background-color: #141e30;
+}
+
+.btn-success {
+  background-color: #198754;
+  color: #fff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border: none;
+  color: #222;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+}
+
+/* Tabel */
+.table-custom th {
+  background: #243b55;
+  color: #fff;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.table-custom td {
+  background: #fff;
+  color: #333;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f3f6;
+}
+
+/* Badge status */
+.badge {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #fff;
+}
+
+/* Form */
+.form-label {
+  font-weight: 500;
+  color: #fff; /* ✅ Label form putih */
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: all 0.2s ease-in-out;
+  color: #333;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #243b55;
+  box-shadow: 0 0 0 0.2rem rgba(36, 59, 85, 0.25);
+}
+
+/* Label wajib diisi */
+.form-required::after {
+  content: ' *';
+  color: red;
+}
+
+/* Footer */
+footer {
+  background-color: #141e30;
+  color: #cfd9df;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* Halaman Beranda Hero Content */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  color: #fff;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* ✅ Bayangan agar jelas */
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #dce3ec;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* ✅ Bayangan */
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .navbar-custom .nav-link {
+    margin-right: 0;
+    padding: 5px 0;
+  }
+
+  main {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .btn-primary:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+}
